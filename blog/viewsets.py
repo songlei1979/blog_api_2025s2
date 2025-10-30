@@ -14,7 +14,12 @@ class CategoryViewSet(viewsets.ModelViewSet):
 class PostViewSet(viewsets.ModelViewSet):
     queryset = Post.objects.all()
     serializer_class = PostSerializer
-    permission_classes = [isAuthorOrReadOnly, IsAuthenticated]
+    permission_classes = [isAuthorOrReadOnly]
+
+    def get_permissions(self):
+        if self.request.method == 'POST':
+            return [IsAuthenticated()]
+        return super().get_permissions()
 
 class CommentViewSet(viewsets.ModelViewSet):
     queryset = Comment.objects.all()
