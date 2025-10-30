@@ -1,5 +1,5 @@
 from rest_framework import viewsets
-from rest_framework.permissions import IsAdminUser
+from rest_framework.permissions import IsAdminUser, IsAuthenticated
 
 from blog.models import Category, Post, Comment, Profile
 from blog.permissions import isAuthorOrReadOnly
@@ -14,7 +14,7 @@ class CategoryViewSet(viewsets.ModelViewSet):
 class PostViewSet(viewsets.ModelViewSet):
     queryset = Post.objects.all()
     serializer_class = PostSerializer
-    permission_classes = [isAuthorOrReadOnly]
+    permission_classes = [isAuthorOrReadOnly, IsAuthenticated]
 
 class CommentViewSet(viewsets.ModelViewSet):
     queryset = Comment.objects.all()
