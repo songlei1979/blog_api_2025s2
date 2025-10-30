@@ -19,6 +19,10 @@ class CommentSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 class ProfileSerializer(serializers.ModelSerializer):
+    username = serializers.SerializerMethodField(read_only=True)
     class Meta:
         model = Profile
-        fields = '__all__'
+        fields = ["user", "bio", "profile_pic", "website_url", "github_url", "username"]
+
+    def get_username(self, obj):
+        return obj.user.username
